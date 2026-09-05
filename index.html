@@ -3,58 +3,76 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Impacto IA</title>
+
+<title>Impacto IA - Cuadernillos</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
-  font-family:Arial,sans-serif;
-  background:#0b1020;
-  color:white;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#080d1c;
+  color:#fff;
 }
 
 .container{
-  max-width:700px;
+  width:100%;
+  max-width:760px;
   margin:auto;
-  padding:25px;
+  padding:25px 18px 50px;
 }
 
-h1{
+.logo{
   text-align:center;
-  font-size:38px;
-  margin-bottom:5px;
+  font-size:42px;
+  font-weight:900;
+  margin-top:15px;
 }
 
-.sub{
+.logo span{
+  color:#7c5cff;
+}
+
+.subtitulo{
   text-align:center;
-  color:#aaa;
-  margin-bottom:30px;
+  color:#aab1c5;
+  margin:8px 0 30px;
 }
 
 .card{
-  background:#151c32;
-  border-radius:18px;
+  background:#151c31;
+  border:1px solid #252e4a;
+  border-radius:20px;
   padding:22px;
-  margin-bottom:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
 }
 
 label{
   display:block;
-  margin-top:15px;
-  margin-bottom:7px;
   font-weight:bold;
+  margin:16px 0 8px;
 }
 
-input,select,textarea{
+input,
+select,
+textarea{
   width:100%;
   padding:14px;
-  border:0;
-  border-radius:10px;
-  background:#252e49;
-  color:white;
+  border:1px solid #303b5c;
+  border-radius:12px;
+  background:#202942;
+  color:#fff;
   font-size:16px;
+  outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#7c5cff;
 }
 
 textarea{
@@ -64,33 +82,64 @@ textarea{
 
 button{
   width:100%;
-  margin-top:25px;
-  padding:16px;
+  margin-top:22px;
+  padding:17px;
   border:0;
-  border-radius:12px;
-  background:#6c4cff;
+  border-radius:13px;
+  background:#7c5cff;
   color:white;
   font-size:18px;
   font-weight:bold;
   cursor:pointer;
 }
 
-button:active{
-  transform:scale(.98);
+button:hover{
+  opacity:.92;
+}
+
+button:disabled{
+  opacity:.55;
+  cursor:not-allowed;
 }
 
 #status{
   margin-top:20px;
   text-align:center;
   font-weight:bold;
+  min-height:24px;
 }
 
 #resultado{
-  background:#10162a;
-  padding:20px;
-  border-radius:12px;
-  white-space:pre-wrap;
   display:none;
+  margin-top:20px;
+  padding:18px;
+  background:#0e1528;
+  border:1px solid #293451;
+  border-radius:14px;
+  white-space:pre-wrap;
+  line-height:1.55;
+  max-height:500px;
+  overflow:auto;
+}
+
+.descarga{
+  display:none;
+  width:100%;
+  margin-top:15px;
+  padding:15px;
+  text-align:center;
+  text-decoration:none;
+  background:#19a974;
+  color:#fff;
+  border-radius:12px;
+  font-weight:bold;
+}
+
+.precios{
+  text-align:center;
+  margin-top:25px;
+  color:#aab1c5;
+  font-size:14px;
 }
 </style>
 </head>
@@ -99,400 +148,289 @@ button:active{
 
 <div class="container">
 
-<h1>Impacto IA</h1>
+  <div class="logo">
+    Impacto <span>IA</span>
+  </div>
 
-<div class="sub">
-Crea tus cuadernillos con inteligencia artificial
+  <div class="subtitulo">
+    Crea cuadernillos infantiles con inteligencia artificial
+  </div>
+
+  <div class="card">
+
+    <label for="tipo">
+      Tipo de cuadernillo
+    </label>
+
+    <select id="tipo">
+      <option value="Actividades infantiles">
+        Actividades infantiles
+      </option>
+
+      <option value="Colorear">
+        Colorear
+      </option>
+
+      <option value="Matemáticas">
+        Matemáticas
+      </option>
+
+      <option value="Lectura">
+        Lectura
+      </option>
+
+      <option value="Escritura">
+        Escritura
+      </option>
+
+      <option value="Aprendizaje">
+        Aprendizaje
+      </option>
+    </select>
+
+
+    <label for="tema">
+      Tema
+    </label>
+
+    <input
+      id="tema"
+      type="text"
+      placeholder="Ejemplo: animales del bosque"
+    >
+
+
+    <label for="edad">
+      Edad
+    </label>
+
+    <select id="edad">
+
+      <option value="3-5 años">
+        3-5 años
+      </option>
+
+      <option value="5-7 años">
+        5-7 años
+      </option>
+
+      <option value="7-9 años">
+        7-9 años
+      </option>
+
+      <option value="9-12 años">
+        9-12 años
+      </option>
+
+    </select>
+
+
+    <label for="pag">
+      Número de páginas
+    </label>
+
+    <select id="pag">
+
+      <option value="20">
+        20 páginas
+      </option>
+
+      <option value="30">
+        30 páginas
+      </option>
+
+      <option value="40">
+        40 páginas
+      </option>
+
+      <option value="50">
+        50 páginas
+      </option>
+
+    </select>
+
+
+    <label for="estilo">
+      Estilo
+    </label>
+
+    <select id="estilo">
+
+      <option value="Divertido">
+        Divertido
+      </option>
+
+      <option value="Educativo">
+        Educativo
+      </option>
+
+      <option value="Colorido">
+        Colorido
+      </option>
+
+      <option value="Profesional">
+        Profesional
+      </option>
+
+    </select>
+
+
+    <label for="extra">
+      Instrucciones adicionales
+    </label>
+
+    <textarea
+      id="extra"
+      placeholder="Ejemplo: actividades fáciles y divertidas..."
+    ></textarea>
+
+
+    <button id="generarBtn" onclick="generar()">
+      🚀 GENERAR CUADERNILLO
+    </button>
+
+
+    <div id="status"></div>
+
+    <div id="resultado"></div>
+
+    <a
+      id="download"
+      class="descarga"
+      href="#"
+      target="_blank"
+    >
+      📥 Descargar cuadernillo
+    </a>
+
+  </div>
+
+
+  <div class="precios">
+    Gratis · Lite 4,99 €/mes · Pro 9,99 €/mes
+  </div>
+
 </div>
 
-<div class="card">
-
-<label>Tipo de cuadernillo</label>
-
-<select id="tipo">
-<option>Actividades infantiles</option>
-<option>Colorear</option>
-<option>Matemáticas</option>
-<option>Lectura</option>
-<option>Escritura</option>
-<option>Aprendizaje</option>
-</select>
-
-<label>Tema</label>
-
-<input
-id="tema"
-type="text"
-placeholder="Ejemplo: animales del bosque"
->
-
-<label>Edad</label>
-
-<select id="edad">
-<option>3-5 años</option>
-<option>5-7 años</option>
-<option>7-9 años</option>
-<option>9-12 años</option>
-</select>
-
-<label>Páginas</label>
-
-<select id="pag">
-<option value="20">20 páginas</option>
-<option value="30">30 páginas</option>
-<option value="40">40 páginas</option>
-<option value="50">50 páginas</option>
-</select>
-
-<label>Estilo</label>
-
-<select id="estilo">
-<option>Divertido</option>
-<option>Educativo</option>
-<option>Colorido</option>
-<option>Profesional</option>
-</select>
-
-<label>Instrucciones adicionales</label>
-
-<textarea
-id="extra"
-placeholder="Escribe aquí cualquier indicación..."
-></textarea>
-
-<button onclick="generar()">
-🚀 GENERAR CUADERNILLO
-</button>
-
-<div id="status"></div>
-
-<div id="resultado"></div>
-
-</div>
-
-</div>
 
 <script>
 
 async function generar(){
 
-const status=document.getElementById("status");
-const resultado=document.getElementById("resultado");
-
-status.textContent="⏳ Generando...";
-resultado.style.display="none";
-
-try{
-
-const r=await fetch("/api/generar",{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-
-prompt:document.getElementById("tema").value,
-
-tipo:document.getElementById("tipo").value,
-
-tema:document.getElementById("tema").value,
-
-edad:document.getElementById("edad").value,
-
-paginas:document.getElementById("pag").value,
-
-estilo:document.getElementById("estilo").value,
-
-extra:document.getElementById("extra").value
-
-})
-});
-
-const d=await r.json();
-
-if(!r.ok){
-throw new Error(d.error || "Error del servidor");
-}
-
-if(!d.texto){
-throw new Error("La IA no devolvió contenido");
-}
-
-status.textContent="✅ Generado correctamente";
-
-resultado.textContent=d.texto;
-
-resultado.style.display="block";
-
-}catch(e){
-
-status.textContent="❌ "+e.message;
-
-}
-
-}
-
-</script>
-
-</body>
-</html>
-button:disabled{
-  opacity:.6;
-}
-
-.status{
-  margin-top:15px;
-  text-align:center;
-}
-
-#resultado{
-  display:none;
-  margin-top:20px;
-  padding:15px;
-  background:#0f1629;
-  border-radius:12px;
-  white-space:pre-wrap;
-}
-
-#descarga{
-  display:none;
-  margin-top:20px;
-  padding:15px;
-  border-radius:12px;
-  background:#00b894;
-  color:white;
-  text-decoration:none;
-  text-align:center;
-  font-weight:bold;
-}
-
-#imagenVista{
-  display:none;
-  width:100%;
-  max-width:500px;
-  margin:20px auto;
-  border-radius:12px;
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-  <div class="brand">
-    Impacto IA
-  </div>
-
-  <div class="card">
-
-    <h1>Crear cuadernillo con IA</h1>
-
-    <label>Tipo</label>
-
-    <select id="tipo">
-      <option>Educativo</option>
-      <option>Matemáticas</option>
-      <option>Lectoescritura</option>
-      <option>Infantil</option>
-      <option>Actividades</option>
-      <option>Colorear</option>
-    </select>
-
-    <label>Tema</label>
-
-    <input
-      id="tema"
-      type="text"
-      placeholder="Ejemplo: números del 1 al 10"
-    >
-
-    <label>Edad</label>
-
-    <select id="edad">
-      <option>3 años</option>
-      <option>4 años</option>
-      <option>5 años</option>
-      <option>6 años</option>
-      <option>7 años</option>
-      <option>8 años</option>
-      <option>9 años</option>
-      <option>10 años</option>
-    </select>
-
-    <label>Páginas</label>
-
-    <select id="paginas">
-      <option value="20">20 páginas</option>
-      <option value="30">30 páginas</option>
-      <option value="40">40 páginas</option>
-      <option value="50">50 páginas</option>
-    </select>
-
-    <label>Estilo</label>
-
-    <select id="estilo">
-      <option>Divertido</option>
-      <option>Educativo</option>
-      <option>Didáctico</option>
-      <option>Profesional</option>
-    </select>
-
-    <label>Instrucciones adicionales</label>
-
-    <textarea
-      id="extra"
-      placeholder="Ejemplo: incluir ejercicios y dibujos para colorear"
-    ></textarea>
-
-    <button id="generar">
-      🚀 Generar cuadernillo
-    </button>
-
-    <div id="status" class="status"></div>
-
-    <div id="resultado"></div>
-
-    <img id="imagenVista">
-
-    <a id="descarga">
-      ⬇️ Descargar PDF
-    </a>
-
-  </div>
-
-</div>
-
-
-<script>
-
-const boton = document.getElementById("generar");
-const status = document.getElementById("status");
-const resultado = document.getElementById("resultado");
-const descarga = document.getElementById("descarga");
-const imagenVista = document.getElementById("imagenVista");
-
-
-boton.addEventListener("click", async function(){
-
-  const tipo = document.getElementById("tipo").value;
-  const tema = document.getElementById("tema").value.trim();
-  const edad = document.getElementById("edad").value;
-  const paginas = Number(document.getElementById("paginas").value);
-  const estilo = document.getElementById("estilo").value;
-  const extra = document.getElementById("extra").value.trim();
-
+  const tema =
+    document.getElementById("tema").value.trim();
 
   if(!tema){
 
-    alert("Escribe un tema primero");
+    document.getElementById("status").textContent =
+      "❌ Escribe un tema";
 
     return;
   }
 
 
+  const tipo =
+    document.getElementById("tipo").value;
+
+  const edad =
+    document.getElementById("edad").value;
+
+  const paginas =
+    document.getElementById("pag").value;
+
+  const estilo =
+    document.getElementById("estilo").value;
+
+  const extra =
+    document.getElementById("extra").value;
+
+
+  const status =
+    document.getElementById("status");
+
+  const resultado =
+    document.getElementById("resultado");
+
+  const boton =
+    document.getElementById("generarBtn");
+
+  const download =
+    document.getElementById("download");
+
+
   boton.disabled = true;
 
-  status.textContent = "⏳ Generando cuadernillo...";
+  status.textContent =
+    "⏳ La IA está creando tu cuadernillo...";
 
   resultado.style.display = "none";
 
-  descarga.style.display = "none";
-
-  imagenVista.style.display = "none";
-
-
-  const prompt = `
-
-Crea un cuadernillo educativo completo.
-
-TIPO:
-${tipo}
-
-TEMA:
-${tema}
-
-EDAD:
-${edad}
-
-PÁGINAS:
-${paginas}
-
-ESTILO:
-${estilo}
-
-INSTRUCCIONES:
-${extra}
-
-IMPORTANTE:
-
-Crea exactamente ${paginas} páginas.
-
-Cada página debe comenzar con:
-
-PÁGINA X
-
-donde X es el número de página.
-
-Cada página debe tener:
-
-- título
-- explicación sencilla
-- actividad
-- ejercicios
-- espacio para responder
-- una descripción de dibujo
-
-Para cada dibujo escribe:
-
-[DIBUJO: descripción detallada del dibujo]
-
-No uses Markdown.
-
-No uses emojis.
-
-Usa solamente texto sencillo.
-
-El contenido debe ser apropiado para niños.
-
-`;
+  download.style.display = "none";
 
 
   try{
 
-    const respuesta = await fetch("/api/generar",{
+    const respuesta = await fetch(
+      "/api/generar",
+      {
+        method:"POST",
 
-      method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
 
-      headers:{
-        "Content-Type":"application/json"
-      },
+        body:JSON.stringify({
 
-      body:JSON.stringify({
-        prompt:prompt
-      })
+          prompt:tema,
 
-    });
+          tipo:tipo,
+
+          tema:tema,
+
+          edad:edad,
+
+          paginas:paginas,
+
+          estilo:estilo,
+
+          extra:extra
+
+        })
+      }
+    );
 
 
-    const data = await respuesta.json();
+    const textoRespuesta =
+      await respuesta.text();
 
 
-    if(!respuesta.ok || data.error){
+    let data;
+
+    try{
+
+      data =
+        JSON.parse(textoRespuesta);
+
+    }catch{
 
       throw new Error(
-        data.error || "Error al generar"
+        "El servidor devolvió una respuesta incorrecta."
       );
 
     }
 
 
-    const texto = limpiarTexto(
-      data.texto || ""
-    );
+    if(!respuesta.ok){
+
+      throw new Error(
+        data.error ||
+        "Error del servidor"
+      );
+
+    }
 
 
-    if(!texto){
+    if(!data.texto){
 
       throw new Error(
         "La IA no devolvió contenido"
@@ -501,723 +439,43 @@ El contenido debe ser apropiado para niños.
     }
 
 
-    resultado.textContent = texto;
+    resultado.textContent =
+      data.texto;
 
-    resultado.style.display = "block";
-
-
-    // Mostrar imagen generada por la IA
-
-    if(data.imagen){
-
-      imagenVista.src = data.imagen;
-
-      imagenVista.style.display = "block";
-
-    }
+    resultado.style.display =
+      "block";
 
 
     status.textContent =
-      "✅ Cuadernillo generado";
+      "✅ ¡Cuadernillo creado correctamente!";
 
 
-    // CREAR PDF
+    if(data.download){
 
-    const { jsPDF } = window.jspdf;
+      download.href =
+        data.download;
 
-    const pdf = new jsPDF({
+      download.style.display =
+        "block";
 
-      orientation:"portrait",
-
-      unit:"mm",
-
-      format:"a4"
-
-    });
-
-
-    const paginasTexto =
-      texto
-      .split(/.chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{
-border:1px solid #465174;
-background:#202943;
-color:#fff;
-padding:9px 14px;
-border-radius:20px
-}
-.chip.on{background:#6c4cff;border-color:#6c4cff}
-.btn{
-width:100%;
-margin-top:22px;
-padding:16px;
-border:0;
-border-radius:12px;
-background:#6c4cff;
-color:#fff;
-font-size:18px;
-font-weight:bold
-}
-.status{text-align:center;margin-top:18px;font-weight:bold}
-#resultado{
-display:none;
-margin-top:20px;
-background:#0a0f1d;
-padding:15px;
-border-radius:12px;
-white-space:pre-wrap;
-line-height:1.5;
-max-height:500px;
-overflow:auto
-}
-.download{
-display:none;
-margin-top:15px;
-text-align:center;
-background:#19a974;
-color:#fff;
-padding:15px;
-border-radius:12px;
-text-decoration:none;
-font-weight:bold
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<div class="brand">🚀 Impacto IA</div>
-
-<div class="card">
-
-<h1>📚 Crea tu cuadernillo</h1>
-
-<label>Tipo</label>
-<select id="tipo">
-<option>Educativo</option>
-<option>Matemáticas</option>
-<option>Lectoescritura</option>
-<option>Infantil</option>
-<option>Actividades</option>
-<option>Colorear</option>
-</select>
-
-<label>Tema</label>
-<input id="tema" placeholder="Ej.: Los animales">
-
-<label>Edad</label>
-<select id="edad">
-<option>3-5 años</option>
-<option>6-8 años</option>
-<option>9-12 años</option>
-<option>13-16 años</option>
-</select>
-
-<label>Páginas</label>
-<select id="pag">
-<option value="20">20 páginas</option>
-<option value="30">30 páginas</option>
-<option value="40">40 páginas</option>
-<option value="50">50 páginas</option>
-</select>
-
-<label>Estilo</label>
-<div class="chips">
-<button class="chip on" type="button">Divertido</button>
-<button class="chip" type="button">Educativo</button>
-<button class="chip" type="button">Didáctico</button>
-<button class="chip" type="button">Profesional</button>
-</div>
-
-<label>Indicaciones</label>
-<textarea id="extra" placeholder="Ej.: ejercicios para colorear y repasar"></textarea>
-
-<button class="btn" id="generarBtn" onclick="generar()">
-🚀 GENERAR CUADERNILLO CON IA
-</button>
-
-<div class="status" id="status"></div>
-
-<pre id="resultado"></pre>
-
-<a id="download" class="download">
-📥 DESCARGAR PDF
-</a>
-
-</div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<script>
-
-document.querySelectorAll(".chip").forEach(function(chip){
-chip.onclick=function(){
-document.querySelectorAll(".chip").forEach(function(c){
-c.classList.remove("on");
-});
-chip.classList.add("on");
-};
-});
-
-function limpiarTexto(texto){
-
-return texto
-.replace(/```[\s\S]*?```/g,"")
-.replace(/^#{1,6}\s*/gm,"")
-.replace(/\*\*/g,"")
-.replace(/__/g,"")
-.replace(/[^\x20-\x7EÀ-ÿ\n\r\t¿¡]/g,"")
-.replace(/\n{3,}/g,"\n\n")
-.trim();
-
-}
-
-async function generar(){
-
-const tema=document.getElementById("tema").value.trim();
-
-if(!tema){
-alert("Escribe un tema primero");
-return;
-}
-
-const tipo=document.getElementById("tipo").value;
-const edad=document.getElementById("edad").value;
-const paginas=document.getElementById("pag").value;
-const estilo=document.querySelector(".chip.on").textContent;
-const extra=document.getElementById("extra").value;
-
-const status=document.getElementById("status");
-const resultado=document.getElementById("resultado");
-const download=document.getElementById("download");
-const boton=document.getElementById("generarBtn");
-
-boton.disabled=true;
-status.textContent="⏳ Creando tu cuadernillo...";
-resultado.style.display="none";
-download.style.display="none";
-
-const prompt=`
-
-CREA UN CUADERNILLO INFANTIL PROFESIONAL.
-
-Tema: ${tema}
-Tipo: ${tipo}
-Edad: ${edad}
-Número de páginas: ${paginas}
-Estilo: ${estilo}
-Indicaciones: ${extra}
-
-REQUISITOS:
-
-Crea exactamente ${paginas} páginas.
-
-Cada página debe empezar con:
-PÁGINA 1
-PÁGINA 2
-PÁGINA 3
-
-y continuar hasta la última página.
-
-Cada página debe tener:
-- un título
-- una explicación sencilla
-- una actividad
-- ejercicios apropiados para la edad
-- espacios para responder
-- una propuesta de dibujo o ilustración
-
-IMPORTANTE:
-
-NO uses Markdown.
-NO uses ##.
-NO uses **.
-NO uses emojis.
-NO uses caracteres especiales extraños.
-
-Escribe únicamente texto normal y limpio.
-
-Para cada dibujo escribe una descripción sencilla entre estas etiquetas:
-
-[DIBUJO: descripción del dibujo]
-
-Ejemplo:
-
-[DIBUJO: tres manzanas grandes para colorear]
-
-El dibujo debe ser apropiado para niños y relacionado con el tema.
-
-`;
-try {
-
-  const respuesta = await fetch("/api/generar", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ prompt: prompt })
-  });
-
-  const data = await respuesta.json();
-
-  if (!respuesta.ok || data.error) {
-    throw new Error(data.error || "Error al generar");
-  }
-
-  let texto = limpiarTexto(data.texto || "");
-
-  if (!texto) {
-    throw new Error("La IA no devolvió contenido");
-  }
-
-  resultado.textContent = texto;
-  resultado.style.display = "block";
-
-  // CREAR PDF
-  const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF({
-    orientation: "portrait",
-    unit: "mm",
-    format: "a4"
-  });
-
-  const paginas = texto.split(/PÁGINA\s+\d+/i).filter(p => p.trim());
-
-  paginas.forEach((contenido, indice) => {
-
-    if (indice > 0) {
-      pdf.addPage();
     }
 
-    let y = 20;
 
-    const lineas = contenido
-      .replace(/\[DIBUJO:[^\]]*\]/gi, "")
-      .split("\n");
+  }catch(error){
 
-    lineas.forEach(linea => {
+    status.textContent =
+      "❌ " + error.message;
 
-      linea = linea.trim();
+  }finally{
 
-      if (!linea) {
-        y += 5;
-        return;
-      }
+    boton.disabled =
+      false;
 
-      if (y > 270) {
-        pdf.addPage();
-        y = 20;
-      }
-
-      pdf.setFontSize(12);
-
-      const textoDividido = pdf.splitTextToSize(linea, 170);
-
-      pdf.text(textoDividido, 20, y);
-
-      y += textoDividido.length * 6;
-    });
-
-    // IMAGEN GENERADA POR LA IA
-    if (data.imagen && indice === 0) {
-
-      const img = new Image();
-      img.src = data.imagen;
-
-      // La imagen se añade cuando termina de cargar
-      img.onload = function () {
-        pdf.addImage(img, "PNG", 20, 180, 170, 90);
-      };
-    }
-  });
-
-  // Descargar PDF
-  const blob = pdf.output("blob");
-  const url = URL.createObjectURL(blob);
-
-  const descarga = document.getElementById("descarga");
-
-  if (descarga) {
-    descarga.href = url;
-    descarga.download = "Impacto-IA.pdf";
-    descarga.style.display = "inline-block";
   }
-
-} catch (error) {
-
-  console.error(error);
-
-  alert("❌ " + error.message);
-}
-
-const url=URL.createObjectURL(blob);
-
-download.href=url;
-download.download="cuadernillo-impacto-ia.pdf";
-download.style.display="block";
-
-status.textContent="✅ ¡Cuadernillo creado!";
-
-}catch(error){
-
-status.textContent="❌ "+error.message;
-
-}finally{
-
-boton.disabled=false;
-
-}
 
 }
 
 </script>
 
 </body>
-</html>label{
-display:block;
-margin-top:15px;
-margin-bottom:6px;
-font-weight:bold
-}
-input,select,textarea{
-width:100%;
-padding:13px;
-border:0;
-border-radius:10px;
-background:#252e49;
-color:white;
-font-size:16px
-}
-textarea{
-min-height:90px;
-resize:vertical
-}
-.chips{
-display:flex;
-gap:8px;
-flex-wrap:wrap
-}
-.chip{
-border:1px solid #465174;
-background:#202943;
-color:white;
-padding:9px 14px;
-border-radius:20px;
-cursor:pointer
-}
-.chip.on{
-background:#6c4cff;
-border-color:#6c4cff
-}
-.btn{
-width:100%;
-margin-top:22px;
-padding:16px;
-border:0;
-border-radius:12px;
-background:#6c4cff;
-color:white;
-font-size:18px;
-font-weight:bold;
-cursor:pointer
-}
-.btn:disabled{
-opacity:.6
-}
-.status{
-margin-top:18px;
-text-align:center;
-font-weight:bold
-}
-#resultado{
-display:none;
-margin-top:20px;
-background:#0a0f1d;
-padding:15px;
-border-radius:12px;
-white-space:pre-wrap;
-line-height:1.5;
-max-height:500px;
-overflow:auto
-}
-.download{
-display:none;
-margin-top:15px;
-text-align:center;
-background:#19a974;
-color:white;
-padding:15px;
-border-radius:12px;
-text-decoration:none;
-font-weight:bold
-}
-.plans{
-margin-top:20px;
-text-align:center;
-opacity:.85;
-font-size:14px
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<div class="brand">🚀 Impacto IA</div>
-
-<div class="card">
-
-<h1>📚 Crea tu cuadernillo con IA</h1>
-
-<label>Tipo de cuadernillo</label>
-<select id="tipo">
-<option>Educativo</option>
-<option>Matemáticas</option>
-<option>Lectoescritura</option>
-<option>Infantil</option>
-<option>Actividades</option>
-<option>Colorear</option>
-<option>Otro</option>
-</select>
-
-<label>Tema</label>
-<input id="tema" placeholder="Ej.: Números del 1 al 20">
-
-<label>Edad</label>
-<select id="edad">
-<option>3-5 años</option>
-<option>6-8 años</option>
-<option>9-12 años</option>
-<option>13-16 años</option>
-<option>Adultos</option>
-</select>
-
-<label>Número de páginas</label>
-<select id="pag">
-<option value="20">20 páginas</option>
-<option value="30">30 páginas</option>
-<option value="40">40 páginas</option>
-<option value="50">50 páginas</option>
-</select>
-
-<label>Estilo</label>
-
-<div class="chips">
-<button class="chip on" type="button">🎨 Divertido</button>
-<button class="chip" type="button">📚 Educativo</button>
-<button class="chip" type="button">🧠 Didáctico</button>
-<button class="chip" type="button">⭐ Profesional</button>
-</div>
-
-<label>Indicaciones adicionales</label>
-<textarea id="extra" placeholder="Ej.: incluir ejercicios, respuestas y actividades..."></textarea>
-
-<button class="btn" id="generarBtn" onclick="generar()">
-🚀 GENERAR CUADERNILLO CON IA
-</button>
-
-<div class="status" id="status"></div>
-
-<pre id="resultado"></pre>
-
-<a id="download" class="download" href="#">
-📥 DESCARGAR CUADERNILLO EN PDF
-</a>
-
-<div class="plans">
-<b>Gratis</b> · Lite 4,99 €/mes · Pro 9,99 €/mes
-</div>
-
-</div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<script>
-
-document.querySelectorAll(".chip").forEach(chip=>{
-chip.addEventListener("click",()=>{
-document.querySelectorAll(".chip").forEach(c=>c.classList.remove("on"));
-chip.classList.add("on");
-});
-});
-
-async function generar(){
-
-const tema=document.getElementById("tema").value.trim();
-const tipo=document.getElementById("tipo").value;
-const edad=document.getElementById("edad").value;
-const paginas=document.getElementById("pag").value;
-const estilo=document.querySelector(".chip.on").textContent;
-const extra=document.getElementById("extra").value;
-
-const status=document.getElementById("status");
-const resultado=document.getElementById("resultado");
-const download=document.getElementById("download");
-const boton=document.getElementById("generarBtn");
-
-if(!tema){
-alert("Escribe un tema primero");
-return;
-}
-
-boton.disabled=true;
-status.textContent="⏳ La IA está creando tu cuadernillo...";
-resultado.style.display="none";
-download.style.display="none";
-
-const prompt=`
-Crea un cuadernillo educativo profesional en español.
-
-TIPO: ${tipo}
-TEMA: ${tema}
-EDAD: ${edad}
-PÁGINAS: ${paginas}
-ESTILO: ${estilo}
-INDICACIONES: ${extra || "Sin indicaciones adicionales"}
-
-Necesito un cuadernillo completo y útil para imprimir.
-
-IMPORTANTE:
-- Crea ${paginas} páginas.
-- Numera cada página claramente como:
-PÁGINA 1
-PÁGINA 2
-PÁGINA 3
-etc.
-- Cada página debe tener contenido diferente.
-- Incluye títulos, explicaciones, ejercicios y actividades cuando corresponda.
-- Adapta todo a la edad indicada.
-- Escribe en español correcto.
-- No expliques lo que estás haciendo.
-- Devuelve directamente el contenido del cuadernillo.
-`;
-
-try{
-
-const respuesta=await fetch("/api/generar",{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-prompt:prompt
-})
-});
-
-const data=await respuesta.json();
-
-if(!respuesta.ok){
-throw new Error(data.error || "Error al generar");
-}
-
-if(data.error){
-throw new Error(data.error);
-}
-
-const texto=data.texto || "";
-
-if(!texto){
-throw new Error("La IA no devolvió contenido");
-}
-
-resultado.textContent=texto;
-resultado.style.display="block";
-
-status.textContent="📄 Preparando PDF...";
-
-const {jsPDF}=window.jspdf;
-const pdf=new jsPDF({
-orientation:"portrait",
-unit:"mm",
-format:"a4"
-});
-
-const paginasTexto=texto
-.split(/(?=PÁGINA\s+\d+)/i)
-.filter(p=>p.trim());
-
-paginasTexto.forEach((contenido,index)=>{
-
-if(index>0){
-pdf.addPage();
-}
-
-pdf.setFont("helvetica","bold");
-pdf.setFontSize(16);
-
-let titulo="Impacto IA";
-
-if(index===0){
-pdf.text(titulo,20,20);
-}
-
-pdf.setFont("helvetica","normal");
-pdf.setFontSize(11);
-
-const lineas=pdf.splitTextToSize(
-contenido.trim(),
-170
-);
-
-let y=32;
-
-lineas.forEach(linea=>{
-
-if(y>280){
-pdf.addPage();
-y=20;
-}
-
-pdf.text(linea,20,y);
-y+=6;
-
-});
-
-});
-
-const blob=pdf.output("blob");
-const url=URL.createObjectURL(blob);
-
-download.href=url;
-download.download="cuadernillo-impacto-ia.pdf";
-download.style.display="block";
-
-status.textContent="✅ ¡Cuadernillo creado correctamente!";
-
-}catch(error){
-
-console.error(error);
-status.textContent="❌ "+error.message;
-
-}finally{
-
-boton.disabled=false;
-
-}
-
-}
-
-</script>
-
-</body>
-</html>if(data.error){alert("❌ "+data.error);return;}
-alert("✅ "+data.texto);}
- const status=document.getElementById("status"), dl=document.getElementById("download");
- dl.style.display="none"; status.textContent="⏳ La IA está creando el cuadernillo. Puede tardar un poco...";
- const estilo=document.querySelector(".chip.on").textContent;
- try{
-  const r=await fetch("/api/generar",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:document.getElementById("tema").value
-   tipo:document.getElementById("tipo").value,tema:document.getElementById("tema").value,edad:document.getElementById("edad").value,
-   paginas:document.getElementById("pag").value,estilo,extra:document.getElementById("extra").value
-  })});
-  const d=await r.json(); if(!r.ok) throw new Error(d.error||"Error");
-  status.textContent=`✅ Listo: ${d.pages} páginas generadas.`;
-  dl.href=d.download; dl.style.display="block";
- }catch(e){status.textContent="❌ "+e.message}
-}
-</script></body></html>
+</html>
