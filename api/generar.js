@@ -47,6 +47,45 @@ export default async function handler(req, res) {
       }
     }
 
+    texto = texto
+      .replace(/```[\s\S]*?```/g, "")
+      .replace(/^#{1,6}\s*/gm, "")
+      .replace(/\*\*/g, "")
+      .replace(/__/g, "")
+      .replace(/[^\x20-\x7EÀ-ÿ\n\r\t¿¡]/g, "")
+      .replace(/\n{3,}/g, "\n\n")
+      .trim();
+
+    if (!texto) {
+      return res.status(500).json({
+        error: "La IA no generó contenido"
+      });
+    }
+
+    return res.status(200).json({
+      texto: texto
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      error: "Error interno: " + error.message
+    });
+  }
+}
+    if (Array.isArray(data.output)) {
+      for (const item of data.output) {
+        if (!Array.isArray(item.content)) continue;
+
+        for (const contenido of item.content) {
+          if (contenido.type === "output_text") {
+            texto += contenido.text || "";
+          }
+        }
+      }
+    }
+
     texto = limpiarTexto(texto);
 
     if (!texto) {
