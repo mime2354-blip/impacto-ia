@@ -15,7 +15,7 @@ body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
   background:#080d1c;
-  color:#fff;
+  color:white;
 }
 
 .container{
@@ -47,7 +47,6 @@ body{
   border:1px solid #252e4a;
   border-radius:20px;
   padding:22px;
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
 }
 
 label{
@@ -64,15 +63,9 @@ textarea{
   border:1px solid #303b5c;
   border-radius:12px;
   background:#202942;
-  color:#fff;
+  color:white;
   font-size:16px;
   outline:none;
-}
-
-input:focus,
-select:focus,
-textarea:focus{
-  border-color:#7c5cff;
 }
 
 textarea{
@@ -93,13 +86,8 @@ button{
   cursor:pointer;
 }
 
-button:hover{
-  opacity:.92;
-}
-
 button:disabled{
   opacity:.55;
-  cursor:not-allowed;
 }
 
 #status{
@@ -112,14 +100,33 @@ button:disabled{
 #resultado{
   display:none;
   margin-top:20px;
-  padding:18px;
-  background:#0e1528;
-  border:1px solid #293451;
-  border-radius:14px;
-  white-space:pre-wrap;
+}
+
+.pagina{
+  background:white;
+  color:#111;
+  border-radius:15px;
+  padding:20px;
+  margin-bottom:20px;
+  box-shadow:0 5px 20px rgba(0,0,0,.3);
+}
+
+.pagina h2{
+  margin-top:0;
+  color:#222;
+}
+
+.pagina p{
   line-height:1.55;
-  max-height:500px;
-  overflow:auto;
+}
+
+.dibujo{
+  width:100%;
+  max-width:500px;
+  display:block;
+  margin:20px auto 5px;
+  border:1px solid #ddd;
+  border-radius:10px;
 }
 
 .descarga{
@@ -130,7 +137,7 @@ button:disabled{
   text-align:center;
   text-decoration:none;
   background:#19a974;
-  color:#fff;
+  color:white;
   border-radius:12px;
   font-weight:bold;
 }
@@ -148,330 +155,338 @@ button:disabled{
 
 <div class="container">
 
-  <div class="logo">
-    Impacto <span>IA</span>
-  </div>
+<div class="logo">
+Impacto <span>IA</span>
+</div>
 
-  <div class="subtitulo">
-    Crea cuadernillos infantiles con inteligencia artificial
-  </div>
+<div class="subtitulo">
+Crea cuadernillos infantiles con inteligencia artificial
+</div>
 
-  <div class="card">
+<div class="card">
 
-    <label for="tipo">
-      Tipo de cuadernillo
-    </label>
+<label for="tipo">Tipo de cuadernillo</label>
 
-    <select id="tipo">
-      <option value="Actividades infantiles">
-        Actividades infantiles
-      </option>
+<select id="tipo">
+<option value="Actividades infantiles">Actividades infantiles</option>
+<option value="Colorear">Colorear</option>
+<option value="Matemáticas">Matemáticas</option>
+<option value="Lectura">Lectura</option>
+<option value="Escritura">Escritura</option>
+<option value="Aprendizaje">Aprendizaje</option>
+</select>
 
-      <option value="Colorear">
-        Colorear
-      </option>
+<label for="tema">Tema</label>
 
-      <option value="Matemáticas">
-        Matemáticas
-      </option>
+<input
+id="tema"
+type="text"
+placeholder="Ejemplo: animales del bosque"
+>
 
-      <option value="Lectura">
-        Lectura
-      </option>
+<label for="edad">Edad</label>
 
-      <option value="Escritura">
-        Escritura
-      </option>
+<select id="edad">
+<option value="3-5 años">3-5 años</option>
+<option value="5-7 años">5-7 años</option>
+<option value="7-9 años">7-9 años</option>
+<option value="9-12 años">9-12 años</option>
+</select>
 
-      <option value="Aprendizaje">
-        Aprendizaje
-      </option>
-    </select>
+<label for="pag">Número de páginas</label>
 
+<select id="pag">
+<option value="20">20 páginas</option>
+<option value="30">30 páginas</option>
+<option value="40">40 páginas</option>
+<option value="50">50 páginas</option>
+</select>
 
-    <label for="tema">
-      Tema
-    </label>
+<label for="estilo">Estilo</label>
 
-    <input
-      id="tema"
-      type="text"
-      placeholder="Ejemplo: animales del bosque"
-    >
+<select id="estilo">
+<option value="Divertido">Divertido</option>
+<option value="Educativo">Educativo</option>
+<option value="Colorido">Colorido</option>
+<option value="Profesional">Profesional</option>
+</select>
 
+<label for="extra">Instrucciones adicionales</label>
 
-    <label for="edad">
-      Edad
-    </label>
+<textarea
+id="extra"
+placeholder="Ejemplo: actividades fáciles y divertidas..."
+></textarea>
 
-    <select id="edad">
+<button id="generarBtn" onclick="generar()">
+🚀 GENERAR CUADERNILLO
+</button>
 
-      <option value="3-5 años">
-        3-5 años
-      </option>
+<div id="status"></div>
 
-      <option value="5-7 años">
-        5-7 años
-      </option>
+<div id="resultado"></div>
 
-      <option value="7-9 años">
-        7-9 años
-      </option>
-
-      <option value="9-12 años">
-        9-12 años
-      </option>
-
-    </select>
-
-
-    <label for="pag">
-      Número de páginas
-    </label>
-
-    <select id="pag">
-
-      <option value="20">
-        20 páginas
-      </option>
-
-      <option value="30">
-        30 páginas
-      </option>
-
-      <option value="40">
-        40 páginas
-      </option>
-
-      <option value="50">
-        50 páginas
-      </option>
-
-    </select>
-
-
-    <label for="estilo">
-      Estilo
-    </label>
-
-    <select id="estilo">
-
-      <option value="Divertido">
-        Divertido
-      </option>
-
-      <option value="Educativo">
-        Educativo
-      </option>
-
-      <option value="Colorido">
-        Colorido
-      </option>
-
-      <option value="Profesional">
-        Profesional
-      </option>
-
-    </select>
-
-
-    <label for="extra">
-      Instrucciones adicionales
-    </label>
-
-    <textarea
-      id="extra"
-      placeholder="Ejemplo: actividades fáciles y divertidas..."
-    ></textarea>
-
-
-    <button id="generarBtn" onclick="generar()">
-      🚀 GENERAR CUADERNILLO
-    </button>
-
-
-    <div id="status"></div>
-
-    <div id="resultado"></div>
-
-    <a
-      id="download"
-      class="descarga"
-      href="#"
-      target="_blank"
-    >
-      📥 Descargar cuadernillo
-    </a>
-
-  </div>
-
-
-  <div class="precios">
-    Gratis · Lite 4,99 €/mes · Pro 9,99 €/mes
-  </div>
+<a
+id="download"
+class="descarga"
+href="#"
+target="_blank"
+>
+📥 Descargar cuadernillo
+</a>
 
 </div>
 
+<div class="precios">
+Gratis · Lite 4,99 €/mes · Pro 9,99 €/mes
+</div>
+
+</div>
 
 <script>
 
 async function generar(){
 
-  const tema =
-    document.getElementById("tema").value.trim();
+const tema =
+document.getElementById("tema").value.trim();
 
-  if(!tema){
+if(!tema){
 
-    document.getElementById("status").textContent =
-      "❌ Escribe un tema";
+document.getElementById("status").textContent =
+"❌ Escribe un tema";
 
-    return;
-  }
+return;
+}
 
+const tipo =
+document.getElementById("tipo").value;
 
-  const tipo =
-    document.getElementById("tipo").value;
+const edad =
+document.getElementById("edad").value;
 
-  const edad =
-    document.getElementById("edad").value;
+const paginas =
+document.getElementById("pag").value;
 
-  const paginas =
-    document.getElementById("pag").value;
+const estilo =
+document.getElementById("estilo").value;
 
-  const estilo =
-    document.getElementById("estilo").value;
+const extra =
+document.getElementById("extra").value;
 
-  const extra =
-    document.getElementById("extra").value;
+const status =
+document.getElementById("status");
 
+const resultado =
+document.getElementById("resultado");
 
-  const status =
-    document.getElementById("status");
+const boton =
+document.getElementById("generarBtn");
 
-  const resultado =
-    document.getElementById("resultado");
+const download =
+document.getElementById("download");
 
-  const boton =
-    document.getElementById("generarBtn");
+boton.disabled=true;
 
-  const download =
-    document.getElementById("download");
+status.textContent =
+"⏳ Creando cuadernillo e imágenes...";
 
+resultado.style.display="none";
 
-  boton.disabled = true;
+resultado.innerHTML="";
 
-  status.textContent =
-    "⏳ La IA está creando tu cuadernillo...";
+download.style.display="none";
 
-  resultado.style.display = "none";
+try{
 
-  download.style.display = "none";
+const respuesta = await fetch(
+"/api/generar",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+prompt:tema,
+tipo:tipo,
+tema:tema,
+edad:edad,
+paginas:paginas,
+estilo:estilo,
+extra:extra
+})
+}
+);
 
+const textoRespuesta =
+await respuesta.text();
 
-  try{
+let data;
 
-    const respuesta = await fetch(
-      "/api/generar",
-      {
-        method:"POST",
+try{
 
-        headers:{
-          "Content-Type":"application/json"
-        },
+data=JSON.parse(textoRespuesta);
 
-        body:JSON.stringify({
+}catch{
 
-          prompt:tema,
+throw new Error(
+"El servidor devolvió una respuesta incorrecta."
+);
 
-          tipo:tipo,
+}
 
-          tema:tema,
+if(!respuesta.ok){
 
-          edad:edad,
+throw new Error(
+data.error || "Error del servidor"
+);
 
-          paginas:paginas,
+}
 
-          estilo:estilo,
+if(!data.texto){
 
-          extra:extra
+throw new Error(
+"La IA no devolvió contenido"
+);
 
-        })
-      }
-    );
+}
 
+resultado.style.display="block";
 
-    const textoRespuesta =
-      await respuesta.text();
+const paginasTexto =
+data.texto.split(/PÁGINA\s+\d+/i);
 
+let numeroPagina=0;
 
-    let data;
+for(const bloque of paginasTexto){
 
-    try{
+if(!bloque.trim()) continue;
 
-      data =
-        JSON.parse(textoRespuesta);
+numeroPagina++;
 
-    }catch{
+let titulo="";
+let actividad="";
+let dibujo="";
 
-      throw new Error(
-        "El servidor devolvió una respuesta incorrecta."
-      );
+const tituloMatch =
+bloque.match(/TÍTULO:\s*(.*)/i);
 
-    }
+if(tituloMatch){
+titulo=tituloMatch[1].trim();
+}
 
+const actividadMatch =
+bloque.match(
+/ACTIVIDAD:\s*([\s\S]*?)(?=\nDIBUJO:|$)/i
+);
 
-    if(!respuesta.ok){
+if(actividadMatch){
+actividad=actividadMatch[1].trim();
+}
 
-      throw new Error(
-        data.error ||
-        "Error del servidor"
-      );
+const dibujoMatch =
+bloque.match(
+/DIBUJO:\s*([\s\S]*)/i
+);
 
-    }
+if(dibujoMatch){
+dibujo=dibujoMatch[1].trim();
+}
 
+const pagina =
+document.createElement("div");
 
-    if(!data.texto){
+pagina.className="pagina";
 
-      throw new Error(
-        "La IA no devolvió contenido"
-      );
+pagina.innerHTML=
+"<h2>Página "+numeroPagina+"</h2>"+
+"<h3>"+escapeHTML(titulo)+"</h3>"+
+"<p>"+escapeHTML(actividad).replace(/\n/g,"<br>")+"</p>";
 
-    }
+if(
+data.imagenes &&
+data.imagenes.length >= numeroPagina
+){
 
+const imagenData =
+data.imagenes[numeroPagina-1];
 
-    resultado.textContent =
-      data.texto;
+if(imagenData){
 
-    resultado.style.display =
-      "block";
+const img =
+document.createElement("img");
 
+img.className="dibujo";
 
-    status.textContent =
-      "✅ ¡Cuadernillo creado correctamente!";
+if(
+imagenData.imagen.startsWith("data:")
+){
 
+img.src=imagenData.imagen;
 
-    if(data.download){
+}else if(
+imagenData.imagen.startsWith("http")
+){
 
-      download.href =
-        data.download;
+img.src=imagenData.imagen;
 
-      download.style.display =
-        "block";
+}else{
 
-    }
+img.src=
+"data:image/png;base64,"+
+imagenData.imagen;
 
+}
 
-  }catch(error){
+pagina.appendChild(img);
 
-    status.textContent =
-      "❌ " + error.message;
+}
 
-  }finally{
+}
 
-    boton.disabled =
-      false;
+if(dibujo){
 
-  }
+const descripcion =
+document.createElement("small");
+
+descripcion.style.display="block";
+descripcion.style.color="#777";
+descripcion.style.marginTop="10px";
+
+descripcion.textContent =
+"Descripción del dibujo: "+dibujo;
+
+pagina.appendChild(descripcion);
+
+}
+
+resultado.appendChild(pagina);
+
+}
+
+status.textContent =
+"✅ ¡Cuadernillo creado correctamente!";
+
+}catch(error){
+
+status.textContent =
+"❌ "+error.message;
+
+}finally{
+
+boton.disabled=false;
+
+}
+
+}
+
+function escapeHTML(text){
+
+return text
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
 }
 
