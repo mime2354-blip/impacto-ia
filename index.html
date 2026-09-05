@@ -24,7 +24,7 @@ async function generar(){
  dl.style.display="none"; status.textContent="⏳ La IA está creando el cuadernillo. Puede tardar un poco...";
  const estilo=document.querySelector(".chip.on").textContent;
  try{
-  const r=await fetch("/api/generar",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+  const r=await fetch("/api/generar",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:document.getElementById("tema").value
    tipo:document.getElementById("tipo").value,tema:document.getElementById("tema").value,edad:document.getElementById("edad").value,
    paginas:document.getElementById("pag").value,estilo,extra:document.getElementById("extra").value
   })});
