@@ -247,86 +247,107 @@ Ejemplo:
 El dibujo debe ser apropiado para niños y relacionado con el tema.
 
 `;
+try {
 
-try{
+  const respuesta = await fetch("/api/generar", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ prompt: prompt })
+  });
 
-const respuesta=await fetch("/api/generar",{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({prompt:prompt})
-});
+  const data = await respuesta.json();
 
-const data=await respuesta.json();
+  if (!respuesta.ok || data.error) {
+    throw new Error(data.error || "Error al generar");
+  }
 
-if(!respuesta.ok || data.error){
-throw new Error(data.error || "Error al generar");
+  let texto = limpiarTexto(data.texto || "");
+
+  if (!texto) {
+    throw new Error("La IA no devolvió contenido");
+  }
+
+  resultado.textContent = texto;
+  resultado.style.display = "block";
+
+  // CREAR PDF
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({
+    orientation: "portrait",
+    unit: "mm",
+    format: "a4"
+  });
+
+  const paginas = texto.split(/PÁGINA\s+\d+/i).filter(p => p.trim());
+
+  paginas.forEach((contenido, indice) => {
+
+    if (indice > 0) {
+      pdf.addPage();
+    }
+
+    let y = 20;
+
+    const lineas = contenido
+      .replace(/\[DIBUJO:[^\]]*\]/gi, "")
+      .split("\n");
+
+    lineas.forEach(linea => {
+
+      linea = linea.trim();
+
+      if (!linea) {
+        y += 5;
+        return;
+      }
+
+      if (y > 270) {
+        pdf.addPage();
+        y = 20;
+      }
+
+      pdf.setFontSize(12);
+
+      const textoDividido = pdf.splitTextToSize(linea, 170);
+
+      pdf.text(textoDividido, 20, y);
+
+      y += textoDividido.length * 6;
+    });
+
+    // IMAGEN GENERADA POR LA IA
+    if (data.imagen && indice === 0) {
+
+      const img = new Image();
+      img.src = data.imagen;
+
+      // La imagen se añade cuando termina de cargar
+      img.onload = function () {
+        pdf.addImage(img, "PNG", 20, 180, 170, 90);
+      };
+    }
+  });
+
+  // Descargar PDF
+  const blob = pdf.output("blob");
+  const url = URL.createObjectURL(blob);
+
+  const descarga = document.getElementById("descarga");
+
+  if (descarga) {
+    descarga.href = url;
+    descarga.download = "Impacto-IA.pdf";
+    descarga.style.display = "inline-block";
+  }
+
+} catch (error) {
+
+  console.error(error);
+
+  alert("❌ " + error.message);
 }
-
-let texto=limpiarTexto(data.texto || "");
-
-if(!texto){
-throw new Error("La IA no devolvió contenido");
-}
-
-resultado.textContent=texto;
-resultado.style.display="block";
-
-status.textContent="📄 Preparando PDF...";
-
-const jsPDF=window.jspdf.jsPDF;
-
-const pdf=new jsPDF({
-orientation:"portrait",
-unit:"mm",
-format:"a4"
-});
-
-const paginasTexto=texto
-.split(/(?=PÁGINA\s+\d+)/i)
-.filter(function(p){
-return p.trim();
-});
-
-paginasTexto.forEach(function(pagina,index){
-
-if(index>0){
-pdf.addPage();
-}
-
-let contenido=pagina
-.replace(/\[DIBUJO:[^\]]*\]/gi,"");
-
-pdf.setFont("helvetica","bold");
-pdf.setFontSize(18);
-pdf.text("Impacto IA",20,20);
-
-pdf.setFont("helvetica","normal");
-pdf.setFontSize(11);
-
-const lineas=pdf.splitTextToSize(
-contenido.trim(),
-170
-);
-
-let y=32;
-
-lineas.forEach(function(linea){
-
-if(y>275){
-pdf.addPage();
-y=20;
-}
-
-pdf.text(linea,20,y);
-y+=6;
-
-});
-
-});
-
-const blob=pdf.output("blob");
 
 const url=URL.createObjectURL(blob);
 
