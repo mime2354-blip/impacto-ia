@@ -1,40 +1,369 @@
-<!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Impacto IA — PDF Creator</title>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Impacto IA — Creador de Cuadernillos</title>
+
 <style>
-body{margin:0;font-family:system-ui,Arial;background:#090e1b;color:#f7f8ff}.wrap{max-width:850px;margin:auto;padding:25px 16px}.brand{font-size:24px;font-weight:900;margin-bottom:20px}.brand span{background:linear-gradient(90deg,#8b5cf6,#22d3ee);-webkit-background-clip:text;color:transparent}.card{background:#11192b;border:1px solid #ffffff14;border-radius:20px;padding:20px;margin-bottom:16px}h1{font-size:28px}label{display:block;font-weight:700;margin:14px 0 7px}input,select,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #ffffff18;background:#090f1e;color:#fff;box-sizing:border-box}textarea{min-height:90px}.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{padding:9px 12px;border-radius:20px;background:#090f1e;color:#cbd5e1;border:1px solid #ffffff18}.on{background:#7255e8;color:#fff}.btn{width:100%;padding:14px;border:0;border-radius:11px;background:linear-gradient(135deg,#7c4dff,#20bdd4);color:white;font-weight:900;margin-top:18px}.status{margin-top:14px;color:#9eabc1}.download{display:none;margin-top:14px;padding:13px;border-radius:10px;background:#1a9b65;color:white;text-align:center;text-decoration:none;font-weight:800}
-</style></head><body><div class="wrap">
-<div class="brand">⚡ <span>Impacto IA</span> <small>PDF Creator</small></div>
-<div class="card"><h1>✨ Crear cuadernillo con IA</h1><p>La IA redacta automáticamente entre 20 y 50 páginas y el servidor genera el PDF.</p>
-<label>Tipo</label><select id="tipo"><option>Cuadernillo infantil</option><option>Libro de actividades</option><option>Fichas educativas</option><option>Planner</option><option>Libro para colorear</option></select>
-<label>Tema</label><input id="tema" placeholder="Ej.: Números del 1 al 20">
-<label>Edad / público</label><input id="edad" placeholder="Ej.: niños de 5 años">
-<label>Páginas</label><select id="pag"><option>20</option><option>30</option><option>40</option><option>50</option></select>
-<label>Estilo</label><div class="chips"><button class="chip on">🎨 Divertido</button><button class="chip">📚 Educativo</button><button class="chip">✨ Profesional</button><button class="chip">🌈 Colorido</button></div>
-<label>Indicaciones extra</label><textarea id="extra" placeholder="Ej.: ejercicios sencillos, letras grandes, espacio para responder..."></textarea>
-<button class="btn" onclick="generar()">🚀 GENERAR CUADERNILLO CON IA</button>
-<div id="status" class="status"></div><a id="download" class="download">📥 DESCARGAR PDF</a>
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#0b1020;
+color:white;
+padding:20px
+}
+.container{
+max-width:700px;
+margin:auto
+}
+.brand{
+text-align:center;
+font-size:32px;
+font-weight:bold;
+margin-bottom:20px
+}
+.card{
+background:#151c32;
+border-radius:18px;
+padding:20px;
+box-shadow:0 10px 30px #0005
+}
+h1{
+text-align:center;
+font-size:25px
+}
+label{
+display:block;
+margin-top:15px;
+margin-bottom:6px;
+font-weight:bold
+}
+input,select,textarea{
+width:100%;
+padding:13px;
+border:0;
+border-radius:10px;
+background:#252e49;
+color:white;
+font-size:16px
+}
+textarea{
+min-height:90px;
+resize:vertical
+}
+.chips{
+display:flex;
+gap:8px;
+flex-wrap:wrap
+}
+.chip{
+border:1px solid #465174;
+background:#202943;
+color:white;
+padding:9px 14px;
+border-radius:20px;
+cursor:pointer
+}
+.chip.on{
+background:#6c4cff;
+border-color:#6c4cff
+}
+.btn{
+width:100%;
+margin-top:22px;
+padding:16px;
+border:0;
+border-radius:12px;
+background:#6c4cff;
+color:white;
+font-size:18px;
+font-weight:bold;
+cursor:pointer
+}
+.btn:disabled{
+opacity:.6
+}
+.status{
+margin-top:18px;
+text-align:center;
+font-weight:bold
+}
+#resultado{
+display:none;
+margin-top:20px;
+background:#0a0f1d;
+padding:15px;
+border-radius:12px;
+white-space:pre-wrap;
+line-height:1.5;
+max-height:500px;
+overflow:auto
+}
+.download{
+display:none;
+margin-top:15px;
+text-align:center;
+background:#19a974;
+color:white;
+padding:15px;
+border-radius:12px;
+text-decoration:none;
+font-weight:bold
+}
+.plans{
+margin-top:20px;
+text-align:center;
+opacity:.85;
+font-size:14px
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="brand">🚀 Impacto IA</div>
+
+<div class="card">
+
+<h1>📚 Crea tu cuadernillo con IA</h1>
+
+<label>Tipo de cuadernillo</label>
+<select id="tipo">
+<option>Educativo</option>
+<option>Matemáticas</option>
+<option>Lectoescritura</option>
+<option>Infantil</option>
+<option>Actividades</option>
+<option>Colorear</option>
+<option>Otro</option>
+</select>
+
+<label>Tema</label>
+<input id="tema" placeholder="Ej.: Números del 1 al 20">
+
+<label>Edad</label>
+<select id="edad">
+<option>3-5 años</option>
+<option>6-8 años</option>
+<option>9-12 años</option>
+<option>13-16 años</option>
+<option>Adultos</option>
+</select>
+
+<label>Número de páginas</label>
+<select id="pag">
+<option value="20">20 páginas</option>
+<option value="30">30 páginas</option>
+<option value="40">40 páginas</option>
+<option value="50">50 páginas</option>
+</select>
+
+<label>Estilo</label>
+
+<div class="chips">
+<button class="chip on" type="button">🎨 Divertido</button>
+<button class="chip" type="button">📚 Educativo</button>
+<button class="chip" type="button">🧠 Didáctico</button>
+<button class="chip" type="button">⭐ Profesional</button>
 </div>
-<div class="card"><b>Planes previstos</b><p>🆓 Gratis · 🟢 Lite 4,99 €/mes · 🔥 Pro 9,99 €/mes</p><small>Los pagos y límites por cuenta se conectarán después.</small></div>
+
+<label>Indicaciones adicionales</label>
+<textarea id="extra" placeholder="Ej.: incluir ejercicios, respuestas y actividades..."></textarea>
+
+<button class="btn" id="generarBtn" onclick="generar()">
+🚀 GENERAR CUADERNILLO CON IA
+</button>
+
+<div class="status" id="status"></div>
+
+<pre id="resultado"></pre>
+
+<a id="download" class="download" href="#">
+📥 DESCARGAR CUADERNILLO EN PDF
+</a>
+
+<div class="plans">
+<b>Gratis</b> · Lite 4,99 €/mes · Pro 9,99 €/mes
 </div>
+
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <script>
-document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{document.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));b.classList.add("on")});
-async function generar(){
-const tema=document.getElementById("tema").value;
-if(!tema){alert("Escribe un tema primero");return;}
-const r=await fetch("/api/generar",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({prompt:tema})
+
+document.querySelectorAll(".chip").forEach(chip=>{
+chip.addEventListener("click",()=>{
+document.querySelectorAll(".chip").forEach(c=>c.classList.remove("on"));
+chip.classList.add("on");
 });
-const data=await r.json();
-if(data.error){alert("❌ "+data.error);return;}
-alert("✅ "+data.texto);
-}</script></body></html>
-if(!tema){alert("Escribe un tema primero");return;}
-const r=await fetch("/api/generar",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:tema})});
-const data=await r.json();
-if(data.error){alert("❌ "+data.error);return;}
+});
+
+async function generar(){
+
+const tema=document.getElementById("tema").value.trim();
+const tipo=document.getElementById("tipo").value;
+const edad=document.getElementById("edad").value;
+const paginas=document.getElementById("pag").value;
+const estilo=document.querySelector(".chip.on").textContent;
+const extra=document.getElementById("extra").value;
+
+const status=document.getElementById("status");
+const resultado=document.getElementById("resultado");
+const download=document.getElementById("download");
+const boton=document.getElementById("generarBtn");
+
+if(!tema){
+alert("Escribe un tema primero");
+return;
+}
+
+boton.disabled=true;
+status.textContent="⏳ La IA está creando tu cuadernillo...";
+resultado.style.display="none";
+download.style.display="none";
+
+const prompt=`
+Crea un cuadernillo educativo profesional en español.
+
+TIPO: ${tipo}
+TEMA: ${tema}
+EDAD: ${edad}
+PÁGINAS: ${paginas}
+ESTILO: ${estilo}
+INDICACIONES: ${extra || "Sin indicaciones adicionales"}
+
+Necesito un cuadernillo completo y útil para imprimir.
+
+IMPORTANTE:
+- Crea ${paginas} páginas.
+- Numera cada página claramente como:
+PÁGINA 1
+PÁGINA 2
+PÁGINA 3
+etc.
+- Cada página debe tener contenido diferente.
+- Incluye títulos, explicaciones, ejercicios y actividades cuando corresponda.
+- Adapta todo a la edad indicada.
+- Escribe en español correcto.
+- No expliques lo que estás haciendo.
+- Devuelve directamente el contenido del cuadernillo.
+`;
+
+try{
+
+const respuesta=await fetch("/api/generar",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+prompt:prompt
+})
+});
+
+const data=await respuesta.json();
+
+if(!respuesta.ok){
+throw new Error(data.error || "Error al generar");
+}
+
+if(data.error){
+throw new Error(data.error);
+}
+
+const texto=data.texto || "";
+
+if(!texto){
+throw new Error("La IA no devolvió contenido");
+}
+
+resultado.textContent=texto;
+resultado.style.display="block";
+
+status.textContent="📄 Preparando PDF...";
+
+const {jsPDF}=window.jspdf;
+const pdf=new jsPDF({
+orientation:"portrait",
+unit:"mm",
+format:"a4"
+});
+
+const paginasTexto=texto
+.split(/(?=PÁGINA\s+\d+)/i)
+.filter(p=>p.trim());
+
+paginasTexto.forEach((contenido,index)=>{
+
+if(index>0){
+pdf.addPage();
+}
+
+pdf.setFont("helvetica","bold");
+pdf.setFontSize(16);
+
+let titulo="Impacto IA";
+
+if(index===0){
+pdf.text(titulo,20,20);
+}
+
+pdf.setFont("helvetica","normal");
+pdf.setFontSize(11);
+
+const lineas=pdf.splitTextToSize(
+contenido.trim(),
+170
+);
+
+let y=32;
+
+lineas.forEach(linea=>{
+
+if(y>280){
+pdf.addPage();
+y=20;
+}
+
+pdf.text(linea,20,y);
+y+=6;
+
+});
+
+});
+
+const blob=pdf.output("blob");
+const url=URL.createObjectURL(blob);
+
+download.href=url;
+download.download="cuadernillo-impacto-ia.pdf";
+download.style.display="block";
+
+status.textContent="✅ ¡Cuadernillo creado correctamente!";
+
+}catch(error){
+
+console.error(error);
+status.textContent="❌ "+error.message;
+
+}finally{
+
+boton.disabled=false;
+
+}
+
+}
+
+</script>
+
+</body>
+</html>if(data.error){alert("❌ "+data.error);return;}
 alert("✅ "+data.texto);}
  const status=document.getElementById("status"), dl=document.getElementById("download");
  dl.style.display="none"; status.textContent="⏳ La IA está creando el cuadernillo. Puede tardar un poco...";
