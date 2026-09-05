@@ -1,17 +1,13 @@
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({
-      error: "Método no permitido"
-    });
+    return res.status(405).json({ error: "Método no permitido" });
   }
 
   try {
     const { prompt } = req.body || {};
 
     if (!prompt) {
-      return res.status(400).json({
-        error: "Falta el tema del cuadernillo"
-      });
+      return res.status(400).json({ error: "Falta el tema" });
     }
 
     const respuesta = await fetch(
@@ -35,6 +31,53 @@ export default async function handler(req, res) {
       return res.status(respuesta.status).json({
         error: data?.error?.message || "Error de OpenAI"
       });
+    }
+
+    let texto = "";
+
+    if (Array.isArray(data.output)) {
+      for (const item of data.output) {
+        if (!Array.isArray(item.content)) continue;
+
+        for (const contenido of item.content) {
+          if (contenido.type === "output_text") {
+            texto += contenido.text || "";
+          }
+        }
+      }
+    }
+
+    texto = limpiarTexto(texto);
+
+    if (!texto) {
+      return res.status(500).json({
+        error: "La IA no generó contenido"
+      });
+    }
+
+    return res.status(200).json({
+      texto
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      error: "Error interno: " + error.message
+    });
+  }
+}
+
+function limpiarTexto(texto) {
+  return texto
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/^#{1,6}\s*/gm, "")
+    .replace(/\*\*/g, "")
+    .replace(/__/g, "")
+    .replace(/[^\x20-\x7EÀ-ÿ\n\r\t¿¡]/g, "")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}      });
     }
 
     let texto = "";
