@@ -1,40 +1,8 @@
 export default async function handler(req, res) {
-  try {
-    if (req.method !== "POST") {
-      return res.status(405).json({ error: "Método no permitido" });
-    }
-
-    const { tipo, tema, edad, paginas, estilo, extra } = req.body || {};
-
-    if (!tema) {
-      return res.status(400).json({ error: "Escribe un tema" });
-    }
-
-    const prompt = `
-Crea el contenido de un cuadernillo infantil.
-
-Tipo: ${tipo || "Actividades infantiles"}
-Tema: ${tema}
-Edad: ${edad || "5-7 años"}
-Número de páginas: ${paginas || 20}
-Estilo: ${estilo || "Divertido"}
-Instrucciones adicionales: ${extra || "Ninguna"}
-
-IMPORTANTE:
-- Crea contenido para todas las páginas.
-- Numera claramente cada página.
-- Cada página debe tener actividades apropiadas para la edad.
-- No uses Markdown.
-- No uses símbolos raros.
-- No pongas explicaciones sobre cómo has creado el cuadernillo.
-- Devuelve únicamente el contenido del cuadernillo.
-`;
-
-    const response = await fetch("https://api.openai.com/v1/responses", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + process.env.OPENAI_API_KEY
+  return res.status(200).json({
+    texto: "RECIBIDO: " + JSON.stringify(req.body)
+  });
+}        "Authorization": "Bearer " + process.env.OPENAI_API_KEY
       },
       body: JSON.stringify({
         model: "gpt-5.6-luna",
