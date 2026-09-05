@@ -351,7 +351,10 @@ throw new Error(
 }
 
 resultado.style.display="block";
-
+if (data.download) {
+  download.href = data.download;
+  download.style.display = "block";
+}
 const paginasTexto =
 data.texto.split(/PÁGINA\s+\d+/i);
 
