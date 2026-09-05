@@ -19,7 +19,12 @@ body{margin:0;font-family:system-ui,Arial;background:#090e1b;color:#f7f8ff}.wrap
 </div>
 <script>
 document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{document.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));b.classList.add("on")});
-async function generar(){
+async function generar(){const tema=document.getElementById("tema").value;
+if(!tema){alert("Escribe un tema primero");return;}
+const r=await fetch("/api/generar",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:tema})});
+const data=await r.json();
+if(data.error){alert("❌ "+data.error);return;}
+alert("✅ "+data.texto);}
  const status=document.getElementById("status"), dl=document.getElementById("download");
  dl.style.display="none"; status.textContent="⏳ La IA está creando el cuadernillo. Puede tardar un poco...";
  const estilo=document.querySelector(".chip.on").textContent;
