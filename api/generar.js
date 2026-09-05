@@ -6,29 +6,32 @@ export default async function handler(req, res) {
       });
     }
 
-    const { tipo, tema, edad, paginas, estilo, extra } = req.body || {};
+    const body = req.body || {};
 
-    if (!tema) {
-      return res.status(400).json({
-        error: "Escribe un tema"
-      });
-    }
+    const tema = body.tema || "animales";
+    const tipo = body.tipo || "Actividades infantiles";
+    const edad = body.edad || "5-7 años";
+    const paginas = body.paginas || "20";
+    const estilo = body.estilo || "Divertido";
+    const extra = body.extra || "";
 
     const prompt = `
-Crea un cuadernillo infantil completo.
+Crea un cuadernillo infantil de ${paginas} páginas.
 
-Tipo: ${tipo || "Actividades infantiles"}
 Tema: ${tema}
-Edad: ${edad || "5-7 años"}
-Páginas: ${paginas || 20}
-Estilo: ${estilo || "Divertido"}
-Instrucciones: ${extra || "Ninguna"}
+Tipo: ${tipo}
+Edad: ${edad}
+Estilo: ${estilo}
+Instrucciones adicionales: ${extra}
 
-Crea contenido para todas las páginas.
-Numera cada página.
-Haz actividades adecuadas para la edad.
-Devuelve solamente el contenido del cuadernillo.
-No uses Markdown.
+IMPORTANTE:
+- Crea contenido para todas las páginas.
+- Numera cada página.
+- Cada página debe tener una actividad clara.
+- Usa lenguaje adecuado para niños.
+- No uses Markdown.
+- No uses símbolos como ## o **.
+- Devuelve únicamente el contenido del cuadernillo.
 `;
 
     const response = await fetch(
@@ -48,15 +51,32 @@ No uses Markdown.
 
     const data = await response.json();
 
-    if (!response.ok) {
-      console.log("OPENAI ERROR:", JSON.stringify(data));
+    console.log("OPENAI STATUS:", response.status);
+    console.log("OPENAI DATA:", JSON.stringify(data));
 
+    if (!response.ok) {
       return res.status(500).json({
         error: data.error?.message || "Error de OpenAI"
       });
     }
 
-    const texto = data.output_text || "";
+    let texto = "";
+
+    if (data.output_text) {
+      texto = data.output_text;
+    }
+
+    if (!texto && Array.isArray(data.output)) {
+      for (const item of data.output) {
+        if (Array.isArray(item.content)) {
+          for (const contenido of item.content) {
+            if (contenido.text) {
+              texto += contenido.text + "\n";
+            }
+          }
+        }
+      }
+    }
 
     if (!texto.trim()) {
       return res.status(500).json({
@@ -65,7 +85,7 @@ No uses Markdown.
     }
 
     return res.status(200).json({
-      texto: texto
+      texto: texto.trim()
     });
 
   } catch (error) {
